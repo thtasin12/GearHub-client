@@ -34,4 +34,5 @@ export function useTheme() {
     if (!context) {
         throw new Error("useTheme must be used inside ThemeProvider")
     }
+    return context
 }
