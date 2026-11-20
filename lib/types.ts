@@ -5,3 +5,15 @@ export type ApiEnvelope<T> = {
     data: T
     code?: string
 }
+
+export type UserProfile = {
+    _id?: string
+    id?: string
+    name: string
+    email: string
+    image?: string
+    role: Role
+    phone?: string
+    address?: string
+    createdAt?: string
+}
