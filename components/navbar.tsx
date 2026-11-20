@@ -13,102 +13,98 @@ import { toast } from "sonner";
 
 export function Navbar() {
     const [open, setOpen] = useState(false);
-    const { user } = useCurrentUser(); const router = useRouter();
+    const { user } = useCurrentUser();
+    const router = useRouter();
+
     async function logout() {
         await authClient.signOut();
         toast.success("Signed out successfully");
-        router.push("/"); router.refresh();
+        router.push("/");
+        router.refresh();
     }
 
     return (
         <header className="sticky top-0 z-50 border-b border-border bg-(--surface)/90 backdrop-blur-xl">
 
-            <div className="container-shell flex h-19 items-center justify-between">
+            <div className="container-shell flex h-20 items-center justify-between">
                 <Logo />
                 <nav className="hidden items-center gap-8 lg:flex">
-                    {
-                        NAV_LINKS.map((link) => <Link key={link.href} href={link.href} className="text-[13px] font-semibold text-muted transition hover:text-(--orange)">
+                    {NAV_LINKS.map((link) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className="text-[13px] font-semibold text-(--muted) transition hover:text-(--orange)"
+                        >
                             {link.label}
-                        </Link>)
-                    }
+                        </Link>
+                    ))}
                 </nav>
 
                 <div className="hidden items-center gap-2 md:flex">
                     <ThemeToggle />
-                    {
-                        user ? <>
-                            <Button
-                                href="/dashboard"
-                                variant="outline"
-                                size="md">
+                    {user ? (
+                        <>
+                            <Button href="/dashboard" variant="outline" size="md" className="rounded-xll">
                                 <LayoutDashboard size={16} />
                                 Dashboard
                             </Button>
                             <button
                                 onClick={logout}
-                                className="grid size-10 place-items-center rounded-xl text-muted hover:bg-var(--surface-muted)">
+                                className="grid size-10 place-items-center rounded-xl text-(--muted) hover:bg-r(--surface-muted)"
+                            >
                                 <LogOut size={17} />
                             </button>
-                        </> : <>
-                            <Button
-                                href="/login"
-                                variant="ghost">
+                        </>
+                    ) : (
+                        <>
+                            <Button href="/login" variant="ghost">
                                 Log in
                             </Button>
-                            <Button
-                                href="/register">
+                            <Button href="/register">
                                 Get started
                                 <ChevronDown className="-rotate-90" size={15} />
                             </Button>
                         </>
-                    }
-
+                    )}
                 </div>
 
                 <div className="flex items-center gap-2 md:hidden">
                     <ThemeToggle />
-
                     <button
                         onClick={() => setOpen(!open)}
-                        className="grid size-10 place-items-center rounded-xl border border-border">
+                        className="grid size-10 place-items-center rounded-xl border border-border"
+                    >
                         {open ? <X size={19} /> : <Menu size={19} />}
                     </button>
                 </div>
             </div>
 
-
-            {
-                open && <div
-                    className="border-t border-border bg-(--surface) px-5 py-5 md:hidden">
-                    <div
-                        className="flex flex-col gap-4">
-                        {
-                            NAV_LINKS.map((link) => <Link
+            {open && (
+                <div className="border-t border-border bg-(--surface) px-5 py-5 md:hidden">
+                    <div className="flex flex-col gap-4">
+                        {NAV_LINKS.map((link) => (
+                            <Link
                                 onClick={() => setOpen(false)}
                                 key={link.href}
                                 href={link.href}
-                                className="text-sm font-semibold">
+                                className="text-sm font-semibold text-(--foreground)"
+                            >
                                 {link.label}
-                            </Link>)
-                        }
-                        {
-                            user ? <Button
-                                href="/dashboard">
-                                Dashboard
-                            </Button> : <div
-                                className="grid grid-cols-2 gap-2">
-                                <Button
-                                    href="/login"
-                                    variant="outline">
+                            </Link>
+                        ))}
+                        {user ? (
+                            <Button href="/dashboard">Dashboard</Button>
+                        ) : (
+                            <div className="grid grid-cols-2 gap-2">
+                                <Button href="/login" variant="outline">
                                     Log in
                                 </Button>
-                                <Button
-                                    href="/register">
-                                    Sign up
-                                </Button>
-                            </div>}
+                                <Button href="/register">Sign up</Button>
+                            </div>
+                        )}
                     </div>
-                </div>}
+                </div>
+            )}
         </header>
-    )
+    );
 }

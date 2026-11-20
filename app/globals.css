@@ -2,6 +2,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  --radius: 0.625rem;
   --background: #f5f7fa;
   --foreground: #17243b;
   --surface: #ffffff;
@@ -148,6 +149,10 @@ textarea:focus-visible {
   line-height: 1.12;
   font-weight: 750;
   letter-spacing: -.045em;
+}
+
+.rounded-xll {
+  border-radius: calc(var(--radius) * 1.4);
 }
 
 @media (max-width: 640px) {

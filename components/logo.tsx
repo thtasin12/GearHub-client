@@ -8,7 +8,7 @@ export function Logo({light = false}: {light?:boolean}) {
     aria-label="GearHub home"
     >
         <span
-        className="grid size-10 place-items-center rounded-xl bg-(--orange) text-white shadow-lg shadow-orange-500/20"
+        className="grid size-10 place-items-center rounded-xll bg-(--orange) text-white shadow-lg shadow-orange-500/20"
         >
             <HardHat
             size={22}
@@ -20,12 +20,11 @@ export function Logo({light = false}: {light?:boolean}) {
         </span>
 
         <span
-        className={`text-[21px] font-black tracking-[-.06em] ${light? "text-white" : "text-foreground"}`}
+        className={`text-[21px] font-black tracking-[-.06em] ${light ? "text-white" : "text-(--foreground)"}`}
         >
             Gear
             <span
-            className="text-(--orange)"
-            >
+            className="text-(--orange)"            >
                 Hub
 
 

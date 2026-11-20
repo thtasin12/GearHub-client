@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { authClient } from "./auth-client";
 import { UserProfile } from "./types";
 import { apiGet } from "./api";
-import { finalizeBundlerFromConfig } from "next/dist/lib/bundler";
 
 export function useCurrentUser() {
     const session = authClient.useSession()
