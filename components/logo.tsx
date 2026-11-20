@@ -22,11 +22,11 @@ export function Logo({light = false}: {light?:boolean}) {
         <span
         className={`text-[21px] font-black tracking-[-.06em] ${light? "text-white" : "text-foreground"}`}
         >
-            gear
+            Gear
             <span
             className="text-(--orange)"
             >
-                hub
+                Hub
 
 
             </span>

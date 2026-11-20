@@ -12,8 +12,8 @@ export const authClient = createAuthClient({
 
 export async function getJwtToken() {
     const result = await authClient.token()
-    if (result.error || !result.data?.token){
+    if (result.error || !result.data?.token) {
         throw new Error(result.error?.message || "Unable to get a secure access token. Please sign in again.")
-        return result.data?.token
     }
+    return result.data.token
 }

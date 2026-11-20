@@ -1,3 +1,4 @@
+"use client"
 import { useEffect, useState } from "react";
 import { authClient } from "./auth-client";
 import { UserProfile } from "./types";
