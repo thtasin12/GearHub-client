@@ -1,6 +1,7 @@
-import {createAuthClient} from "better-auth/react"
+import {createAuthClient, methods} from "better-auth/react"
 import {jwtClient} from "better-auth/client/plugins"
 import { APP_URL } from "./constants"
+
 
 export const authClient = createAuthClient({
     baseURL: APP_URL,
@@ -17,3 +18,6 @@ export async function getJwtToken() {
     }
     return result.data.token
 }
+
+
+
