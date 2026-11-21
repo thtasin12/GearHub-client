@@ -84,4 +84,10 @@ export const apiGet = <T>(
 })
 
 export const apiPost = <T>(path: string, body?: unknown, auth = true) => apiRequest<T>(path, { method: "POST", body: body === undefined ? undefined : JSON.stringify(body), auth });
+
 export const apiPatch = <T>(path: string, body: unknown, auth = true) => apiRequest<T>(path, { method: "PATCH", body: JSON.stringify(body), auth });
+
+export const apiDelete = <T>(path: string, auth = true) => apiRequest<T>(path, {
+  method: "DELETE",
+  auth
+})
