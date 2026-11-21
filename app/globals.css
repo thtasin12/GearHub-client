@@ -151,7 +151,7 @@ textarea:focus-visible {
   letter-spacing: -.045em;
 }
 
-.rounded-xll {
+.rounded-xl {
   border-radius: calc(var(--radius) * 1.4);
 }
 

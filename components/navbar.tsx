@@ -44,7 +44,7 @@ export function Navbar() {
                     <ThemeToggle />
                     {user ? (
                         <>
-                            <Button href="/dashboard" variant="outline" size="md" className="rounded-xll">
+                            <Button href="/dashboard" variant="outline" size="md" className="rounded-xl">
                                 <LayoutDashboard size={16} />
                                 Dashboard
                             </Button>
@@ -57,10 +57,10 @@ export function Navbar() {
                         </>
                     ) : (
                         <>
-                            <Button href="/login" variant="ghost">
+                            <Button href="/login" variant="ghost" className="rounded-xl">
                                 Log in
                             </Button>
-                            <Button href="/register">
+                            <Button href="/register" className="rounded-xl">
                                 Get started
                                 <ChevronDown className="-rotate-90" size={15} />
                             </Button>
