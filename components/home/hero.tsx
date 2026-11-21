@@ -66,18 +66,16 @@ export function Hero() {
                         The smarter way to rent equipment
                     </div>
 
-                    <h1
-                        className="max-w-2xl text-[clamp(3rem, 6vw, 4.2rem)] font-black leading-[0.98] tracking-[-.065em]"
+                    <h1 
+                    className="max-w-2xl text-[clamp(2.75rem,5.2vw,4.25rem)] font-black leading-[1.02] tracking-[-0.055em]"
                     >
                         Your next big <br />
                         project starts <br />
-                        <span
-                            className="text-[#ff985d]"
+                        <span 
+                        className="text-[#ff985d]"
                         >
                             with the right gear.
-
                         </span>
-
                     </h1>
 
                     <p
