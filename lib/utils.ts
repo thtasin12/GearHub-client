@@ -27,3 +27,7 @@ export function formatDate(value?: string | Date, options?: Intl.DateTimeFormatO
 export function initials(name?: string) { 
     return (name || "GearHub").split(" ").filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("")
 }
+
+export function titleCase(value = "") { 
+    return value.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase())
+}
