@@ -17,3 +17,9 @@ export function makeQuery(params: Record<string, string | number | boolean | und
     })
     return query.toString()
 }
+
+export function formatDate(value?: string | Date, options?: Intl.DateTimeFormatOptions) {
+    if (!value) return "—"
+    const date = new Date(value)
+    return Number.isNaN(date.getTime()) ? "—" : new Intl.DateTimeFormat("en-BD", options ?? { day: "numeric", month: "short", year: "numeric" }).format(date)
+}
