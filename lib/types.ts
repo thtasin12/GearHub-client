@@ -61,3 +61,14 @@ export type Review = {
     comment: string
     createdAt: string
 }
+export type Pagination = { 
+    page: number
+    limit: number
+    total: number 
+    totalPages: number 
+}
+
+export type PageResult<T> = { 
+    items: T[]
+    pagination: Pagination 
+}
