@@ -72,3 +72,36 @@ export type PageResult<T> = {
     items: T[]
     pagination: Pagination 
 }
+
+export type Payment = { 
+    _id: string 
+    stripeSessionId?: string
+    amount: number
+    currency: string
+    status: string
+    purpose?: string
+    createdAt: string 
+}
+
+export type Booking = {
+  _id: string
+  equipmentId: string
+  equipmentName: string
+  equipmentImage: string
+  customerName: string
+  ownerName: string
+  startAt: string
+  endAt: string
+  requiredQuantity: number
+  totalAmount: number
+  currency?: string
+  paymentStatus: string
+  bookingStatus: string
+  durationDays?: number
+  rentalType?: string
+  createdAt: string
+  contactNumber?: string
+  deliveryAddress?: string
+  additionalNotes?: string
+  payments?: Payment[]
+}
