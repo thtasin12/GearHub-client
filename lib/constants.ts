@@ -2,8 +2,13 @@ import { SquareLetterG } from "lucide-react"
 import { imageConfigDefault } from "next/dist/shared/lib/image-config"
 
 export const APP_NAME = "GearHub"
-export const API_URL = ""
-export const APP_URL = process.env.NEXT_PUBLIC_APP || "http://localhost:3000"
+export const API_URL = (
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+).replace(/\/$/, "")
+
+export const APP_URL = (
+  process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+).replace(/\/$/, "")
 
 export const CATEGORIES = [
     {
