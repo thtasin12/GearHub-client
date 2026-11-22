@@ -23,3 +23,7 @@ export function formatDate(value?: string | Date, options?: Intl.DateTimeFormatO
     const date = new Date(value)
     return Number.isNaN(date.getTime()) ? "—" : new Intl.DateTimeFormat("en-BD", options ?? { day: "numeric", month: "short", year: "numeric" }).format(date)
 }
+
+export function initials(name?: string) { 
+    return (name || "GearHub").split(" ").filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("")
+}
