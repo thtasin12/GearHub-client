@@ -5,7 +5,8 @@ import {
   MapPin,
   Phone,
   ShieldCheck,
-} from "lucide-react";
+} from "lucide-react"
+import { CurrentYear } from "@/components/current-year"
 
 function FacebookIcon() {
   return (
@@ -206,7 +207,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-10 flex flex-col items-center justify-between gap-5 border-t border-white/10 pt-7 text-center sm:flex-row sm:text-left">
           <p className="text-sm text-slate-500">
-            © {new Date().getFullYear()} GearHub. All rights reserved.
+            © <CurrentYear /> GearHub. All rights reserved.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500">
