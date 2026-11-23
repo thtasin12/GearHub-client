@@ -19,7 +19,9 @@ import {
   LogOut,
   ChevronLeft,
   Menu,
-  Search
+  Search,
+  ShieldCheck,
+  Store
 } from "lucide-react"
 import { toast } from "sonner"
 import { authClient } from "@/lib/auth-client"
@@ -38,6 +40,7 @@ const customerNav = [
   { label: "Compare equipment", href: "/dashboard/compare", icon: Scale },
   { label: "Messages", href: "/dashboard/messages", icon: MessageCircle },
   { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
+  { label: "Become an owner", href: "/dashboard/apply-owner", icon: Store },
   { label: "Profile", href: "/dashboard/profile", icon: UserRound }
 ]
 
@@ -57,6 +60,7 @@ const adminNav = [
   { label: "All users", href: "/dashboard/admin/users", icon: Users },
   { label: "Equipment review", href: "/dashboard/admin/equipment", icon: Package },
   { label: "All rentals", href: "/dashboard/admin/bookings", icon: ClipboardList },
+  { label: "Owner applications", href: "/dashboard/admin/owner-applications", icon: ShieldCheck },
   { label: "Messages", href: "/dashboard/messages", icon: MessageCircle },
   { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
   { label: "My profile", href: "/dashboard/profile", icon: UserRound }
