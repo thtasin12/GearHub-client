@@ -186,6 +186,7 @@ export function DashboardShell({
                 await authClient.signOut()
                 router.replace("/login")
               }}
+              
             >
               Sign out
             </Button>

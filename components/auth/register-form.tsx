@@ -123,7 +123,7 @@ export function RegisterForm() {
         onClick={google}
         variant="outline"
         type="button"
-        className="w-full"
+        className="w-full cursor-pointer"
       >
         <GoogleIcon />
         Sign up with Google
@@ -257,7 +257,7 @@ export function RegisterForm() {
           type="submit"
           disabled={busy}
           size="lg"
-          className="mt-2 w-full"
+          className="mt-2 w-full cursor-pointer"
         >
           {busy ? "Creating account…" : "Create free account"}
           <ArrowRight size={17} />

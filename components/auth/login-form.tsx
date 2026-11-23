@@ -104,11 +104,10 @@ export function LoginForm() {
 
   return (
     <div>
-      {/* Google Login Button */}
       <Button
         onClick={google}
         variant="outline"
-        className="w-full"
+        className="w-full cursor-pointer"
         type="button"
       >
         <GoogleIcon />
@@ -199,7 +198,7 @@ export function LoginForm() {
           type="submit"
           disabled={busy}
           size="lg"
-          className="w-full"
+          className="w-full cursor-pointer"
         >
           {busy ? "Signing in…" : "Sign in to GearHub"}
 

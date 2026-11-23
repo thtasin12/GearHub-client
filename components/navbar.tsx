@@ -50,7 +50,7 @@ export function Navbar() {
                             </Button>
                             <button
                                 onClick={logout}
-                                className="grid size-10 place-items-center rounded-xl text-(--muted) hover:bg-r(--surface-muted)"
+                                className="grid size-10 place-items-center rounded-xl text-(--muted) hover:bg-r(--surface-muted) cursor-pointer"
                             >
                                 <LogOut size={17} />
                             </button>
