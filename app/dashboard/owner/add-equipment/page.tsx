@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from "react"
@@ -20,6 +19,15 @@ import {
   Textarea
 } from "@/components/ui/field"
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog"
+
 import { CATEGORIES } from "@/lib/constants"
 import { apiPost } from "@/lib/api"
 
@@ -27,8 +35,10 @@ export default function AddEquipmentPage() {
   const router = useRouter()
 
   const [busy, setBusy] = useState(false)
-  const [uploading, setUploading] = useState(false)
   const [image, setImage] = useState("")
+  const [draftImage, setDraftImage] = useState("")
+  const [imageDialogOpen, setImageDialogOpen] = useState(false)
+  const [imagePreviewError, setImagePreviewError] = useState(false)
 
   const [form, setForm] = useState({
     name: "",
@@ -54,47 +64,36 @@ export default function AddEquipmentPage() {
     }))
   }
 
-  async function upload(file?: File) {
-    if (!file) return
+  function openImageDialog() {
+    setDraftImage(image)
+    setImagePreviewError(false)
+    setImageDialogOpen(true)
+  }
 
-    if (!file.type.startsWith("image/")) {
-      toast.error("Select an image file.")
-      return
-    }
-
-    if (file.size > 6 * 1024 * 1024) {
-      toast.error("Image must be smaller than 6 MB.")
-      return
-    }
-
-    setUploading(true)
+  function addImageUrl() {
+    const value = draftImage.trim()
 
     try {
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader()
+      const parsedUrl = new URL(value)
 
-        reader.onload = () => resolve(String(reader.result))
-        reader.onerror = () => reject(new Error("Could not read image"))
+      if (!["http:", "https:"].includes(parsedUrl.protocol)) {
+        throw new Error("Invalid image URL")
+      }
 
-        reader.readAsDataURL(file)
-      })
+      if (value.length > 2000) {
+        toast.error("Image URL must be shorter than 2000 characters.")
+        return
+      }
 
-      const result = await apiPost<{ url: string }>(
-        "/api/uploads/image",
-        { imageBase64: base64 },
-        true
-      )
+      setImage(value)
+      setImageDialogOpen(false)
+      setImagePreviewError(false)
 
-      setImage(result.url)
-      toast.success("Image uploaded successfully")
-    } catch (e) {
+      toast.success("Equipment image URL added")
+    } catch {
       toast.error(
-        e instanceof Error
-          ? e.message
-          : "Image upload failed"
+        "Enter a valid image URL starting with https:// or http://"
       )
-    } finally {
-      setUploading(false)
     }
   }
 
@@ -102,7 +101,7 @@ export default function AddEquipmentPage() {
     e.preventDefault()
 
     if (!image) {
-      toast.error("Upload an equipment image first.")
+      toast.error("Add an equipment image URL first.")
       return
     }
 
@@ -150,6 +149,8 @@ export default function AddEquipmentPage() {
       setBusy(false)
     }
   }
+
+  const canPreview = /^https?:\/\//i.test(draftImage.trim())
 
   return (
     <>
@@ -355,34 +356,31 @@ export default function AddEquipmentPage() {
               </h3>
 
               <p className="mt-1 text-xs leading-5 text-muted">
-                Upload a clear image. GearHub stores images through ImgBB.
+                Add a direct image URL for your equipment.
               </p>
 
-              <label className="mt-4 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--surface-muted)] px-4 py-8 text-center transition hover:border-[var(--orange)]">
+              <button
+                type="button"
+                onClick={openImageDialog}
+                className="mt-4 flex w-full cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[var(--border)] bg-[var(--surface-muted)] px-4 py-8 text-center transition hover:border-[var(--orange)]"
+              >
                 <span className="grid size-12 place-items-center rounded-xl bg-[var(--orange-soft)] text-[var(--orange)]">
                   <ImagePlus size={23} />
                 </span>
 
                 <span className="mt-3 text-sm font-bold">
-                  {uploading ? "Uploading…" : "Choose image"}
+                  {image ? "Change image URL" : "Add image URL"}
                 </span>
 
                 <span className="mt-1 text-[10px] text-muted">
-                  JPG, PNG or WEBP · up to 6 MB
+                  Paste a JPG, PNG or WEBP image link
                 </span>
-
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => upload(e.target.files?.[0])}
-                />
-              </label>
+              </button>
 
               {image && (
                 <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-emerald-600">
                   <CheckCircle2 size={15} />
-                  Image uploaded
+                  Image URL added
                 </div>
               )}
             </CardBody>
@@ -410,7 +408,7 @@ export default function AddEquipmentPage() {
 
               <Button
                 type="submit"
-                disabled={busy || uploading}
+                disabled={busy}
                 size="lg"
                 className="mt-5 w-full"
               >
@@ -421,6 +419,96 @@ export default function AddEquipmentPage() {
           </Card>
         </div>
       </form>
+
+      <Dialog
+        open={imageDialogOpen}
+        onOpenChange={setImageDialogOpen}
+      >
+        <DialogContent className="bg-white text-zinc-950 shadow-xl dark:bg-zinc-900 dark:text-zinc-50 sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>
+              Add equipment image
+            </DialogTitle>
+
+            <DialogDescription>
+              Paste a direct image URL. The link should open the image
+              itself, not an entire webpage.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="equipment-image-url">
+                Image URL
+              </Label>
+
+              <Input
+                id="equipment-image-url"
+                type="url"
+                value={draftImage}
+                onChange={(e) => {
+                  setDraftImage(e.target.value)
+                  setImagePreviewError(false)
+                }}
+                placeholder="https://example.com/equipment.jpg"
+                className="mt-2"
+              />
+            </div>
+
+            <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] p-3">
+              {canPreview ? (
+                <img
+                  src={draftImage.trim()}
+                  alt="Equipment image preview"
+                  loading="lazy"
+                  className="max-h-56 w-full rounded-lg object-contain"
+                  onError={() => setImagePreviewError(true)}
+                  onLoad={() => setImagePreviewError(false)}
+                />
+              ) : (
+                <div className="grid min-h-36 place-items-center text-center">
+                  <div>
+                    <ImagePlus
+                      size={28}
+                      className="mx-auto text-muted"
+                    />
+
+                    <p className="mt-2 text-xs text-muted">
+                      Image preview will appear here
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {imagePreviewError && (
+                <p className="mt-2 text-center text-xs text-red-600">
+                  Could not load this image. Check whether the URL is
+                  a public direct image link.
+                </p>
+              )}
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setImageDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              type="button"
+              onClick={addImageUrl}
+              disabled={!canPreview || imagePreviewError}
+            >
+              <CheckCircle2 size={15} />
+              Use this image
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
